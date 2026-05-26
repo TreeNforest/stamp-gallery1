@@ -7,13 +7,25 @@
 <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
 <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@400;600&family=LXGW+WenKai+TC&family=Zhi+Meng+Xing+Shu&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@400;600&family=LXGW+WenKai+TC&family=Kaisei+Opti&display=swap" rel="stylesheet">
 <style>
 * { margin:0; padding:0; box-sizing:border-box; }
 body { background:#fdf6e3; color:#1a0a00; }
 input[type="date"]::-webkit-calendar-picker-indicator { opacity:.5; cursor:pointer; }
 @keyframes cardIn { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
 @keyframes spin { to{transform:rotate(360deg)} }
+@font-face {
+  font-family: 'RixingSong';
+  src: url('rixingsong-1.0-semibold.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'CreamFont';
+  src: url('creamfont-3.3.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
 </style>
 </head>
 <body>
@@ -45,8 +57,9 @@ const FONTS=[
   {label:"宋體（預設）", value:"'Noto Serif TC',serif"},
   {label:"黑體", value:"'Noto Sans TC',sans-serif"},
   {label:"霞鶩文楷", value:"'LXGW WenKai TC',serif"},
-  {label:"仿宋", value:"FangSong,STFangSong,serif"},
-  {label:"楷體", value:"KaiTi,STKaiti,serif"},
+  {label:"Kaisei Opti", value:"'Kaisei Opti',serif"},
+  {label:"日星宋體貳號", value:"'RixingSong',serif"},
+  {label:"凝書體", value:"'CreamFont',serif"},
 ];
 
 /* ── SVG generators ── */
