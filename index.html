@@ -298,10 +298,10 @@ function StampModal({stamp,cats,onClose,onSave,onDelete,font}){
 }
 
 /* ── StampCard ── */
-function StampCard({stamp,catColor,catName,onClick,delay,font}){
+function StampCard({stamp,catColor,catName,onClick,delay,font,fontSize=14}){
   const col=catColor(stamp.cat);
   return(
-    <div onClick={onClick} style={{background:"white",border:"1px solid #e8d5b0",borderRadius:3,padding:18,display:"flex",flexDirection:"column",alignItems:"center",gap:10,cursor:"pointer",boxShadow:"2px 3px 12px rgba(26,10,0,.12)",position:"relative",transition:"all .3s",animation:`cardIn .4s ease ${delay}ms both`,fontFamily:font}}
+    <div onClick={onClick} style={{background:"white",border:"1px solid #e8d5b0",borderRadius:3,padding:18,display:"flex",flexDirection:"column",alignItems:"center",gap:10,cursor:"pointer",boxShadow:"2px 3px 12px rgba(26,10,0,.12)",position:"relative",transition:"all .3s",animation:`cardIn .4s ease ${delay}ms both`,fontFamily:font,fontSize:fontSize}}
       onMouseEnter={e=>{e.currentTarget.style.transform="translateY(-4px)";e.currentTarget.style.borderColor="#b8860b";}}
       onMouseLeave={e=>{e.currentTarget.style.transform="";e.currentTarget.style.borderColor="#e8d5b0";}}>
       <span style={{position:"absolute",top:7,right:7,fontSize:9,letterSpacing:2,padding:"2px 7px",borderRadius:1,fontWeight:600,background:col+"22",color:col}}>{catName(stamp.cat)}</span>
@@ -309,6 +309,120 @@ function StampCard({stamp,catColor,catName,onClick,delay,font}){
       <div style={{fontSize:13,fontWeight:600,letterSpacing:2,textAlign:"center"}}>{stamp.name}</div>
       <div style={{fontSize:11,color:"#999",letterSpacing:1,textAlign:"center"}}>{stamp.stampDate?fmtDate(stamp.stampDate):"—"}・{stamp.material}</div>
       <div style={{fontSize:10,letterSpacing:2,color:"#b8860b",fontStyle:"italic"}}>{catName(stamp.cat)}</div>
+    </div>
+  );
+}
+
+
+/* ── CalendarModal ── */
+function CalendarModal({stamps,onClose,onSelectStamp,font}){
+  const now=new Date();
+  const[year,setYear]=useState(now.getFullYear());
+  const[month,setMonth]=useState(now.getMonth());
+  const[daySelected,setDaySelected]=useState(null);
+
+  const firstDay=new Date(year,month,1).getDay();
+  const daysInMonth=new Date(year,month+1,0).getDate();
+  const weeks=[];
+  let day=1-firstDay;
+  for(let w=0;w<6;w++){
+    const row=[];
+    for(let d=0;d<7;d++,day++) row.push(day);
+    weeks.push(row);
+    if(day>daysInMonth) break;
+  }
+
+  const padZ=n=>String(n).padStart(2,'0');
+  const dateStr=(y,m,d)=>`${y}-${padZ(m+1)}-${padZ(d)}`;
+  const stampsOnDay=d=>stamps.filter(s=>s.stampDate===dateStr(year,month,d));
+  const todayStr=new Date().toISOString().slice(0,10);
+
+  const dayStamps=daySelected?stampsOnDay(daySelected):[];
+  const WEEK=['日','一','二','三','四','五','六'];
+  const MONTHS=['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'];
+
+  return(
+    <div style={{position:"fixed",inset:0,background:"rgba(10,5,0,.75)",zIndex:200,display:"flex",alignItems:"center",justifyContent:"center",backdropFilter:"blur(3px)"}} onClick={onClose}>
+      <div onClick={e=>e.stopPropagation()} style={{background:"#fdf6e3",border:"1px solid #b8860b",maxWidth:480,width:"92%",padding:28,position:"relative",boxShadow:"0 20px 60px rgba(0,0,0,.4)",borderRadius:2,maxHeight:"92vh",overflowY:"auto",fontFamily:font}}>
+        <button onClick={onClose} style={{position:"absolute",top:10,right:14,background:"none",border:"none",fontSize:20,cursor:"pointer",color:"#b8860b",lineHeight:1}}>✕</button>
+
+        {/* 月份導航 */}
+        <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:20}}>
+          <button onClick={()=>{if(month===0){setMonth(11);setYear(y=>y-1);}else setMonth(m=>m-1);setDaySelected(null);}} style={{background:"none",border:"1.5px solid #e8d5b0",borderRadius:2,padding:"4px 12px",cursor:"pointer",color:"#b8860b",fontSize:16}}>‹</button>
+          <div style={{textAlign:"center"}}>
+            <div style={{fontSize:18,fontWeight:700,letterSpacing:4}}>{year}</div>
+            <div style={{fontSize:13,color:"#b8860b",letterSpacing:3}}>{MONTHS[month]}</div>
+          </div>
+          <button onClick={()=>{if(month===11){setMonth(0);setYear(y=>y+1);}else setMonth(m=>m+1);setDaySelected(null);}} style={{background:"none",border:"1.5px solid #e8d5b0",borderRadius:2,padding:"4px 12px",cursor:"pointer",color:"#b8860b",fontSize:16}}>›</button>
+        </div>
+
+        {/* 星期標題 */}
+        <div style={{display:"grid",gridTemplateColumns:"repeat(7,1fr)",gap:2,marginBottom:4}}>
+          {WEEK.map(w=>(<div key={w} style={{textAlign:"center",fontSize:10,letterSpacing:2,color:"#aaa",padding:"4px 0"}}>{w}</div>))}
+        </div>
+
+        {/* 日期格 */}
+        <div style={{display:"grid",gridTemplateColumns:"repeat(7,1fr)",gap:2,marginBottom:20}}>
+          {weeks.flat().map((d,i)=>{
+            const valid=d>=1&&d<=daysInMonth;
+            const ds=valid?dateStr(year,month,d):"";
+            const cnt=valid?stampsOnDay(d).length:0;
+            const isToday=ds===todayStr;
+            const isSel=d===daySelected;
+            return(
+              <div key={i} onClick={()=>{if(valid&&cnt>0){setDaySelected(d===daySelected?null:d);}}} style={{
+                minHeight:44,borderRadius:3,padding:"4px 2px",textAlign:"center",
+                background:isSel?"#9b1b1b":isToday?"rgba(184,134,11,.12)":"transparent",
+                border:isSel?"1.5px solid #9b1b1b":isToday?"1.5px solid #b8860b":"1.5px solid transparent",
+                cursor:valid&&cnt>0?"pointer":"default",
+                opacity:valid?1:0,transition:"all .15s"
+              }}>
+                {valid&&(<>
+                  <div style={{fontSize:13,fontWeight:isToday?700:400,color:isSel?"white":isToday?"#b8860b":"#1a0a00"}}>{d}</div>
+                  {cnt>0&&(
+                    <div style={{display:"flex",flexWrap:"wrap",gap:2,justifyContent:"center",marginTop:2}}>
+                      {Array.from({length:Math.min(cnt,4)}).map((_,i)=>(<div key={i} style={{width:5,height:5,borderRadius:"50%",background:isSel?"rgba(255,255,255,.7)":"#c0392b"}}/>))}
+                      {cnt>4&&<div style={{fontSize:8,color:isSel?"white":"#c0392b"}}>+{cnt-4}</div>}
+                    </div>
+                  )}
+                </>)}
+              </div>
+            );
+          })}
+        </div>
+
+        {/* 當日印章列表 */}
+        {daySelected&&(
+          <div style={{borderTop:"1px solid #e8d5b0",paddingTop:16}}>
+            <div style={{fontSize:11,letterSpacing:3,textTransform:"uppercase",color:"#b8860b",marginBottom:12,textAlign:"center"}}>
+              {year}/{padZ(month+1)}/{padZ(daySelected)} 蓋章紀錄（{dayStamps.length} 枚）
+            </div>
+            <div style={{display:"flex",flexDirection:"column",gap:8}}>
+              {dayStamps.map(s=>(
+                <div key={s.id} onClick={()=>{onSelectStamp(s);onClose();}} style={{display:"flex",alignItems:"center",gap:12,padding:"10px 12px",border:"1px solid #e8d5b0",borderRadius:2,background:"white",cursor:"pointer",transition:"all .2s"}}
+                  onMouseEnter={e=>e.currentTarget.style.borderColor="#b8860b"}
+                  onMouseLeave={e=>e.currentTarget.style.borderColor="#e8d5b0"}>
+                  <div style={{width:48,height:48,flexShrink:0}}>
+                    {s.image
+                      ?<img src={s.image} style={{width:48,height:"auto",maxHeight:48,objectFit:"contain",borderRadius:2}}/>
+                      :<div dangerouslySetInnerHTML={{__html:renderSvg(s.svgKey,s.svgArgs)}}/>
+                    }
+                  </div>
+                  <div>
+                    <div style={{fontSize:14,fontWeight:600,letterSpacing:2}}>{s.name}</div>
+                    <div style={{fontSize:11,color:"#999",letterSpacing:1,marginTop:2}}>{s.material}</div>
+                  </div>
+                  <div style={{marginLeft:"auto",fontSize:11,color:"#b8860b",letterSpacing:1}}>›</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {!daySelected&&(
+          <div style={{textAlign:"center",fontSize:12,color:"#ccc",letterSpacing:2,paddingTop:4}}>點選有紀錄的日期查看蓋章</div>
+        )}
+      </div>
     </div>
   );
 }
@@ -323,6 +437,8 @@ function App(){
   const[showCatPanel,setShowCatPanel]=useState(false);
   const[showAddForm,setShowAddForm]=useState(false);
   const[showFontPicker,setShowFontPicker]=useState(false);
+  const[showCalendar,setShowCalendar]=useState(false);
+  const[fontSize,setFontSize]=useState(14);
   const[font,setFont]=useState(FONTS[0].value);
   const[fbStatus,setFbStatus]=useState("idle");
   const toast=useToast();
@@ -386,7 +502,7 @@ function App(){
   const newStampDefault=()=>({id:"s_"+Date.now(),name:"新印章",cat:cats[0]?.id||"official",desc:"",stampDate:today,material:"",svgKey:"circle",svgArgs:["新","印","#8B0000"],image:null});
 
   return(
-    <div style={{minHeight:"100vh",background:"#fdf6e3",fontFamily:font,color:"#1a0a00",backgroundImage:"repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(180,150,80,.07) 39px,rgba(180,150,80,.07) 40px),repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(180,150,80,.04) 39px,rgba(180,150,80,.04) 40px)"}}>
+    <div style={{minHeight:"100vh",background:"#fdf6e3",fontFamily:font,color:"#1a0a00",backgroundImage:"repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(180,150,80,.07) 39px,rgba(180,150,80,.07) 40px),repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(180,150,80,.04) 39px,rgba(180,150,80,.04) 40px)",fontSize:fontSize}}>
 
       {/* HEADER */}
       <header style={{background:"#1a0a00",padding:"30px 24px 26px",textAlign:"center",position:"relative",overflow:"hidden"}}>
@@ -404,6 +520,7 @@ function App(){
             {[
               {label:"⚙ 管理分類",fn:()=>setShowCatPanel(true)},
               {label:"＋ 新增印章",fn:()=>setShowAddForm(true)},
+              {label:"📅 蓋章日曆",fn:()=>setShowCalendar(true)},
               {label:"Ａ 字體",fn:()=>setShowFontPicker(p=>!p)},
             ].map(b=>(
               <button key={b.label} onClick={b.fn} style={{padding:"6px 16px",border:"1px solid rgba(230,200,122,.35)",background:"rgba(184,134,11,.1)",color:"#e6c87a",fontFamily:font,fontSize:11,cursor:"pointer",borderRadius:2,letterSpacing:2,transition:"all .2s"}}
@@ -416,13 +533,24 @@ function App(){
           </div>
           {/* 字體選擇下拉 */}
           {showFontPicker&&(
-            <div style={{marginTop:12,display:"flex",flexWrap:"wrap",gap:8,justifyContent:"center"}}>
-              {FONTS.map(ff=>(
-                <button key={ff.value} onClick={()=>{setFont(ff.value);setShowFontPicker(false);toast.fire(`字體：${ff.label}`);}}
-                  style={{padding:"5px 14px",border:`1px solid ${font===ff.value?"#e6c87a":"rgba(230,200,122,.3)"}`,background:font===ff.value?"rgba(184,134,11,.3)":"transparent",color:"#e6c87a",fontFamily:ff.value,fontSize:13,cursor:"pointer",borderRadius:2,letterSpacing:1}}>
-                  {ff.label}
-                </button>
-              ))}
+            <div style={{marginTop:12,display:"flex",flexDirection:"column",alignItems:"center",gap:10}}>
+              <div style={{display:"flex",flexWrap:"wrap",gap:6,justifyContent:"center"}}>
+                {FONTS.map(ff=>(
+                  <button key={ff.value} onClick={()=>{setFont(ff.value);toast.fire(`字體：${ff.label}`);}}
+                    style={{padding:"5px 14px",border:`1px solid ${font===ff.value?"#e6c87a":"rgba(230,200,122,.3)"}`,background:font===ff.value?"rgba(184,134,11,.3)":"transparent",color:"#e6c87a",fontFamily:ff.value,fontSize:13,cursor:"pointer",borderRadius:2,letterSpacing:1}}>
+                    {ff.label}
+                  </button>
+                ))}
+              </div>
+              <div style={{display:"flex",alignItems:"center",gap:8}}>
+                <span style={{fontSize:10,letterSpacing:2,color:"rgba(230,200,122,.7)"}}>字級</span>
+                {[12,13,14,15,16,18,20].map(sz=>(
+                  <button key={sz} onClick={()=>{setFontSize(sz);toast.fire(`字級：${sz}px`);}}
+                    style={{padding:"3px 10px",border:`1px solid ${fontSize===sz?"#e6c87a":"rgba(230,200,122,.3)"}`,background:fontSize===sz?"rgba(184,134,11,.3)":"transparent",color:"#e6c87a",fontFamily:"inherit",fontSize:11,cursor:"pointer",borderRadius:2}}>
+                    {sz}
+                  </button>
+                ))}
+              </div>
             </div>
           )}
         </div>
@@ -444,14 +572,15 @@ function App(){
           ?<div style={{gridColumn:"1/-1",textAlign:"center",padding:"60px 20px",color:"#b8860b",fontSize:13,letterSpacing:3}}>正在從 Firebase 載入資料…</div>
           :filtered.length===0
             ?<div style={{gridColumn:"1/-1",textAlign:"center",padding:"60px 20px",color:"#ccc",fontSize:14,letterSpacing:2}}>沒有符合條件的印章</div>
-            :filtered.map((s,i)=>(<StampCard key={s.id} stamp={s} catColor={catColor} catName={catName} onClick={()=>setSelected(s)} delay={i*35} font={font}/>))
+            :filtered.map((s,i)=>(<StampCard key={s.id} stamp={s} catColor={catColor} catName={catName} onClick={()=>setSelected(s)} delay={i*35} font={font} fontSize={fontSize}/>))
         }
       </div>
 
       {/* MODALS */}
-      {selected&&<StampModal stamp={selected} cats={cats} onClose={()=>setSelected(null)} onSave={saveStamp} onDelete={deleteStamp} font={font}/>}
+      {selected&&<StampModal stamp={selected} cats={cats} onClose={()=>setSelected(null)} onSave={saveStamp} onDelete={deleteStamp} font={font} fontSize={fontSize}/>}
       {showCatPanel&&<CatPanel cats={cats} stamps={stamps} onClose={()=>setShowCatPanel(false)} onUpdate={handleCatUpdate} font={font}/>}
       {showAddForm&&<StampForm initial={newStampDefault()} cats={cats} onClose={()=>setShowAddForm(false)} font={font} title="新增印章" onSave={form=>{saveStamp(form);setShowAddForm(false);}}/>}
+      {showCalendar&&<CalendarModal stamps={stamps} onClose={()=>setShowCalendar(false)} onSelectStamp={s=>{setSelected(s);}} font={font} fontSize={fontSize}/>}
 
       <div style={{position:"fixed",bottom:24,left:"50%",transform:`translateX(-50%) translateY(${toast.show?0:16}px)`,background:"#1a0a00",color:"#e6c87a",padding:"9px 22px",borderRadius:2,fontSize:13,letterSpacing:2,opacity:toast.show?1:0,transition:"all .3s",pointerEvents:"none",zIndex:999,whiteSpace:"nowrap"}}>{toast.msg}</div>
     </div>
