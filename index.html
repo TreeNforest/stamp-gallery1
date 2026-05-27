@@ -122,24 +122,24 @@ const getAllDescendantIds=(cats,id)=>{
   dfs(id);return result;
 };
 const INIT_STAMPS=[
-  {id:"s1",name:"縣令之印",cat:"official",desc:"漢代官方印章，四方形制，以白文為主，莊重典雅。",stampDate:"",material:"銅印",svgKey:"square",svgArgs:["令","#8B0000"],image:null},
-  {id:"s2",name:"御覽之寶",cat:"official",desc:"皇室御覽印鑑，圓形大璽，外圈銘文，象徵天子威儀。",stampDate:"",material:"玉印",svgKey:"circle",svgArgs:["御覽","之寶","#7B1B1B"],image:null},
-  {id:"s3",name:"關防大印",cat:"official",desc:"橢圓形騎縫關防，用於公文騎縫處防偽。",stampDate:"",material:"銅印",svgKey:"oval",svgArgs:["中華民國","關　防","#1a3a6a"],image:null},
-  {id:"s4",name:"海關查驗",cat:"official",desc:"港口海關驗貨用章，矩形格式，中英對照。",stampDate:"",material:"橡皮章",svgKey:"chop",svgArgs:["#1a3a6a"],image:null},
-  {id:"s5",name:"趙氏私章",cat:"personal",desc:"圓形單字姓名印，朱文篆刻姓氏，用於書畫落款。",stampDate:"",material:"壽山石",svgKey:"hanko",svgArgs:["趙","#8B0000"],image:null},
-  {id:"s6",name:"林氏閒章",cat:"personal",desc:"文人閒章，花瓣形外框，常用於書畫作品裝飾。",stampDate:"",material:"青田石",svgKey:"flower",svgArgs:["林","#2d6a2d"],image:null},
-  {id:"s7",name:"王氏漢柯",cat:"personal",desc:"日式漢柯風格，陰刻技法，用於個人認証及銀行往來。",stampDate:"",material:"象牙替代品",svgKey:"hanko",svgArgs:["王","#1a1a4a"],image:null},
-  {id:"s8",name:"詩心畫意",cat:"art",desc:"文人詩書畫三絕之意象，圓形構圖，用於藝術作品題識。",stampDate:"",material:"雞血石",svgKey:"circle",svgArgs:["詩心","畫意","#7B4000"],image:null},
-  {id:"s9",name:"虛懷若谷",cat:"art",desc:"四字吉語閒章，方形構圖，筆力雄健，意境深遠。",stampDate:"",material:"巴林石",svgKey:"square",svgArgs:["谷","#3a5a2a"],image:null},
-  {id:"s10",name:"蠟封貴族紋",cat:"art",desc:"歐式家族紋章蠟封，不規則蠟紋輪廓，用於信封封蠟。",stampDate:"",material:"蠟印",svgKey:"wax",svgArgs:["VR","#6b1a1a"],image:null},
-  {id:"s11",name:"篆書長款",cat:"art",desc:"長方形橫款印，分欄記錄作品名及年份，為題跋之用。",stampDate:"",material:"壽山芙蓉石",svgKey:"rect",svgArgs:["丹青妙手","甲辰年製","#8B0000"],image:null},
-  {id:"s12",name:"公司大章",cat:"modern",desc:"現代企業圓形公章，外圈全稱，中置五角星，具法律效力。",stampDate:today,material:"橡皮章",svgKey:"circle",svgArgs:["公　司","大　章","#1a3a6a"],image:null},
-  {id:"s13",name:"收訖日期戳",cat:"modern",desc:"矩形日期收訖章，上方已收下方填入日期，辦公常用。",stampDate:today,material:"自動印章",svgKey:"rect",svgArgs:["已　收　訖","2024·05·24","#2a2a2a"],image:null},
-  {id:"s14",name:"QC合格章",cat:"modern",desc:"品質管理合格標章，橢圓形，標示檢驗通過。",stampDate:today,material:"自動印章",svgKey:"oval",svgArgs:["品質合格","PASSED QC","#1a6a2a"],image:null},
-  {id:"s15",name:"楔形文字板",cat:"foreign",desc:"美索不達米亞楔形文字滾印，代表最古老文字系統。",stampDate:"",material:"圓柱滾印",svgKey:"cune",svgArgs:["#7a5a2a"],image:null},
-  {id:"s16",name:"埃及卡特里奇",cat:"foreign",desc:"古埃及法老王名橢圓框徽，具神聖護身符之意義。",stampDate:"",material:"金屬印璽",svgKey:"oval",svgArgs:["𓂀𓏏𓁦","PHARAOH","#8B6914"],image:null},
-  {id:"s17",name:"維京盧恩印",cat:"foreign",desc:"北歐維京盧恩文字圓印，象徵勇氣與力量。",stampDate:"",material:"骨製印",svgKey:"circle",svgArgs:["ᚠᚢᚦ","VIKING","#2a3a5a"],image:null},
-  {id:"s18",name:"歐式蠟封L",cat:"foreign",desc:"歐洲貴族書信蠟封，以字母縮寫為中心，典雅浪漫。",stampDate:"",material:"黃銅印",svgKey:"wax",svgArgs:["L·M","#4a1a6a"],image:null},
+  {id:"s1",name:"縣令之印",cat:"official",desc:"漢代官方印章，四方形制，以白文為主，莊重典雅。",stampDate:"",stampType:"單色章",svgKey:"square",svgArgs:["令","#8B0000"],images:[],coverIdx:0},
+  {id:"s2",name:"御覽之寶",cat:"official",desc:"皇室御覽印鑑，圓形大璽，外圈銘文，象徵天子威儀。",stampDate:"",stampType:"單色章",svgKey:"circle",svgArgs:["御覽","之寶","#7B1B1B"],images:[],coverIdx:0},
+  {id:"s3",name:"關防大印",cat:"official",desc:"橢圓形騎縫關防，用於公文騎縫處防偽。",stampDate:"",stampType:"單色章",svgKey:"oval",svgArgs:["中華民國","關　防","#1a3a6a"],images:[],coverIdx:0},
+  {id:"s4",name:"海關查驗",cat:"official",desc:"港口海關驗貨用章，矩形格式，中英對照。",stampDate:"",stampType:"單色章",svgKey:"chop",svgArgs:["#1a3a6a"],images:[],coverIdx:0},
+  {id:"s5",name:"趙氏私章",cat:"personal",desc:"圓形單字姓名印，朱文篆刻姓氏，用於書畫落款。",stampDate:"",stampType:"單色章",svgKey:"hanko",svgArgs:["趙","#8B0000"],images:[],coverIdx:0},
+  {id:"s6",name:"林氏閒章",cat:"personal",desc:"文人閒章，花瓣形外框，常用於書畫作品裝飾。",stampDate:"",stampType:"單色章",svgKey:"flower",svgArgs:["林","#2d6a2d"],images:[],coverIdx:0},
+  {id:"s7",name:"王氏漢柯",cat:"personal",desc:"日式漢柯風格，陰刻技法，用於個人認証及銀行往來。",stampDate:"",stampType:"單色章",svgKey:"hanko",svgArgs:["王","#1a1a4a"],images:[],coverIdx:0},
+  {id:"s8",name:"詩心畫意",cat:"art",desc:"文人詩書畫三絕之意象，圓形構圖，用於藝術作品題識。",stampDate:"",stampType:"單色章",svgKey:"circle",svgArgs:["詩心","畫意","#7B4000"],images:[],coverIdx:0},
+  {id:"s9",name:"虛懷若谷",cat:"art",desc:"四字吉語閒章，方形構圖，筆力雄健，意境深遠。",stampDate:"",stampType:"單色章",svgKey:"square",svgArgs:["谷","#3a5a2a"],images:[],coverIdx:0},
+  {id:"s10",name:"蠟封貴族紋",cat:"art",desc:"歐式家族紋章蠟封，不規則蠟紋輪廓，用於信封封蠟。",stampDate:"",stampType:"套色章",svgKey:"wax",svgArgs:["VR","#6b1a1a"],images:[],coverIdx:0},
+  {id:"s11",name:"篆書長款",cat:"art",desc:"長方形橫款印，分欄記錄作品名及年份，為題跋之用。",stampDate:"",stampType:"單色章",svgKey:"rect",svgArgs:["丹青妙手","甲辰年製","#8B0000"],images:[],coverIdx:0},
+  {id:"s12",name:"公司大章",cat:"modern",desc:"現代企業圓形公章，外圈全稱，中置五角星，具法律效力。",stampDate:today,stampType:"單色章",svgKey:"circle",svgArgs:["公　司","大　章","#1a3a6a"],images:[],coverIdx:0},
+  {id:"s13",name:"收訖日期戳",cat:"modern",desc:"矩形日期收訖章，上方已收下方填入日期，辦公常用。",stampDate:today,stampType:"單色章",svgKey:"rect",svgArgs:["已　收　訖","2024·05·24","#2a2a2a"],images:[],coverIdx:0},
+  {id:"s14",name:"QC合格章",cat:"modern",desc:"品質管理合格標章，橢圓形，標示檢驗通過。",stampDate:today,stampType:"單色章",svgKey:"oval",svgArgs:["品質合格","PASSED QC","#1a6a2a"],images:[],coverIdx:0},
+  {id:"s15",name:"楔形文字板",cat:"foreign",desc:"美索不達米亞楔形文字滾印，代表最古老文字系統。",stampDate:"",stampType:"單色章",svgKey:"cune",svgArgs:["#7a5a2a"],images:[],coverIdx:0},
+  {id:"s16",name:"埃及卡特里奇",cat:"foreign",desc:"古埃及法老王名橢圓框徽，具神聖護身符之意義。",stampDate:"",stampType:"單色章",svgKey:"oval",svgArgs:["𓂀𓏏𓁦","PHARAOH","#8B6914"],images:[],coverIdx:0},
+  {id:"s17",name:"維京盧恩印",cat:"foreign",desc:"北歐維京盧恩文字圓印，象徵勇氣與力量。",stampDate:"",stampType:"單色章",svgKey:"circle",svgArgs:["ᚠᚢᚦ","VIKING","#2a3a5a"],images:[],coverIdx:0},
+  {id:"s18",name:"歐式蠟封L",cat:"foreign",desc:"歐洲貴族書信蠟封，以字母縮寫為中心，典雅浪漫。",stampDate:"",stampType:"單色章",svgKey:"wax",svgArgs:["L·M","#4a1a6a"],images:[],coverIdx:0},
 ];
 
 function useToast(){const[msg,setMsg]=useState("");const[show,setShow]=useState(false);const t=useRef(null);const fire=m=>{setMsg(m);setShow(true);clearTimeout(t.current);t.current=setTimeout(()=>setShow(false),2500);};return{msg,show,fire};}
@@ -151,7 +151,9 @@ const modalBox={background:"#fdf6e3",border:"1px solid #b8860b",maxWidth:500,wid
 const closeBtn={position:"absolute",top:10,right:14,background:"none",border:"none",fontSize:20,cursor:"pointer",color:"#b8860b",lineHeight:1};
 
 function StampVisual({stamp,size=120}){
-  if(stamp.image)return(<div style={{maxWidth:size*1.5,width:"100%",borderRadius:3,overflow:"hidden",border:"1px solid #e8d5b0",flexShrink:0}}><img src={stamp.image} alt={stamp.name} style={{width:"100%",height:"auto",display:"block"}}/></div>);
+  const imgs=stamp.images||[];
+  const cover=imgs[stamp.coverIdx||0]||imgs[0]||stamp.image||null;
+  if(cover)return(<div style={{maxWidth:size*1.5,width:"100%",borderRadius:3,overflow:"hidden",border:"1px solid #e8d5b0",flexShrink:0}}><img src={cover} alt={stamp.name} style={{width:"100%",height:"auto",display:"block"}}/></div>);
   return <div style={{width:size,height:size,flexShrink:0}} dangerouslySetInnerHTML={{__html:renderSvg(stamp.svgKey,stamp.svgArgs)}}/>;
 }
 
@@ -279,7 +281,17 @@ function StampForm({initial,cats,onClose,onSave,font,title}){
   const f=(k,v)=>setForm(p=>({...p,[k]:v}));
   const catName=id=>{const c=cats.find(x=>x.id===id);return c?c.name:id;};
   const catFullPath=id=>{const path=getCatPath(cats,id);return path.map(c=>c.name).join(" › ");};
-  const handleImg=e=>{const file=e.target.files[0];if(!file)return;if(file.size>800*1024){alert("圖片請小於 800KB");return;}const r=new FileReader();r.onload=ev=>f("image",ev.target.result);r.readAsDataURL(file);};
+  const handleImg=e=>{
+    const files=Array.from(e.target.files);
+    if(!files.length)return;
+    const tooBig=files.filter(f=>f.size>3*1024*1024);
+    if(tooBig.length>0){alert(`以下圖片超過 3MB：${tooBig.map(f=>f.name).join(", ")}`);return;}
+    Promise.all(files.map(file=>new Promise(res=>{const r=new FileReader();r.onload=ev=>res(ev.target.result);r.readAsDataURL(file);})))
+      .then(results=>{
+        setForm(p=>{const imgs=[...(p.images||[]),...results];return{...p,images:imgs,coverIdx:p.coverIdx||0};});
+      });
+    e.target.value="";
+  };
   const inpS=inp(font);
   const gb={padding:"7px 18px",border:"1.5px solid #b8860b",background:"transparent",color:"#b8860b",fontFamily:font,fontSize:12,cursor:"pointer",borderRadius:2,letterSpacing:2};
 
@@ -362,12 +374,31 @@ function StampModal({stamp,cats,onClose,onSave,onDelete,font}){
     <div style={overlayBg} onClick={onClose}>
       <div style={{...modalBox,fontFamily:font}} onClick={e=>e.stopPropagation()}>
         <button onClick={onClose} style={closeBtn}>✕</button>
-        <div style={{display:"flex",justifyContent:"center",marginBottom:14}}><StampVisual stamp={stamp} size={160}/></div>
+        {/* 圖片畫廊 */}
+        {(stamp.images||[]).length>0?(
+          <div style={{marginBottom:14}}>
+            <div style={{display:"flex",justifyContent:"center",marginBottom:8}}>
+              <div style={{maxWidth:220,width:"100%",borderRadius:3,overflow:"hidden",border:"1px solid #e8d5b0"}}>
+                <img src={(stamp.images||[])[stamp.coverIdx||0]||(stamp.images||[])[0]} alt={stamp.name} style={{width:"100%",height:"auto",display:"block"}}/>
+              </div>
+            </div>
+            {(stamp.images||[]).length>1&&(
+              <div style={{display:"flex",gap:6,flexWrap:"wrap",justifyContent:"center"}}>
+                {(stamp.images||[]).map((img,i)=>(
+                  <img key={i} src={img} style={{width:50,height:50,objectFit:"cover",borderRadius:2,border:`2px solid ${i===(stamp.coverIdx||0)?"#9b1b1b":"#e8d5b0"}`,cursor:"pointer"}}
+                    onClick={()=>onSave({...stamp,coverIdx:i})}/>
+                ))}
+              </div>
+            )}
+          </div>
+        ):(
+          <div style={{display:"flex",justifyContent:"center",marginBottom:14}}><StampVisual stamp={stamp} size={160}/></div>
+        )}
         <div style={{fontSize:18,fontWeight:700,letterSpacing:4,textAlign:"center",marginBottom:5}}>{stamp.name}</div>
         <div style={{textAlign:"center",fontSize:11,letterSpacing:3,color:"#b8860b",textTransform:"uppercase",marginBottom:12}}>{catName(stamp.cat)}</div>
         <div style={{fontSize:13,lineHeight:2,color:"#555",textAlign:"center",marginBottom:14}}>{stamp.desc}</div>
         <div style={{display:"flex",gap:16,borderTop:"1px solid #e8d5b0",paddingTop:12,justifyContent:"center",flexWrap:"wrap"}}>
-          {[["蓋印日期",stamp.stampDate?fmtDate(stamp.stampDate):"—"],["材質",stamp.material],["類型",catName(stamp.cat)]].map(([l,v])=>(<div key={l} style={{textAlign:"center"}}><div style={{fontSize:9,letterSpacing:2,textTransform:"uppercase",color:"#b8860b",marginBottom:3}}>{l}</div><div style={{fontSize:13,fontWeight:600}}>{v}</div></div>))}
+          {[["蓋印日期",stamp.stampDate?fmtDate(stamp.stampDate):"—"],["類型",stamp.stampType||"單色章"],["地點",stamp.location||"—"],["類型",catName(stamp.cat)]].map(([l,v])=>(<div key={l} style={{textAlign:"center"}}><div style={{fontSize:9,letterSpacing:2,textTransform:"uppercase",color:"#b8860b",marginBottom:3}}>{l}</div><div style={{fontSize:13,fontWeight:600}}>{v}</div></div>))}
         </div>
         <div style={{display:"flex",justifyContent:"center",gap:10,marginTop:14}}>
           <button onClick={()=>setEditMode(true)} style={gb}>✏ 編輯</button>
@@ -394,7 +425,7 @@ function StampCard({stamp,catColor,catName,onClick,delay,font,fontSize=14}){
       <span style={{position:"absolute",top:7,right:7,fontSize:9,letterSpacing:2,padding:"2px 7px",borderRadius:1,fontWeight:600,background:col+"22",color:col}}>{catName(stamp.cat)}</span>
       <StampVisual stamp={stamp} size={120}/>
       <div style={{fontSize:13,fontWeight:600,letterSpacing:2,textAlign:"center"}}>{stamp.name}</div>
-      <div style={{fontSize:11,color:"#999",letterSpacing:1,textAlign:"center"}}>{stamp.stampDate?fmtDate(stamp.stampDate):"—"}・{stamp.material}</div>
+      <div style={{fontSize:11,color:"#999",letterSpacing:1,textAlign:"center"}}>{stamp.stampDate?fmtDate(stamp.stampDate):"—"}・{stamp.stampType||"單色章"}</div>{stamp.location&&<div style={{fontSize:10,color:"#bbb",letterSpacing:1,textAlign:"center",marginTop:-4}}>{stamp.location}</div>}
       <div style={{fontSize:10,letterSpacing:2,color:"#b8860b",fontStyle:"italic"}}>{catName(stamp.cat)}</div>
     </div>
   );
@@ -539,7 +570,7 @@ function App(){
   const[showFontPicker,setShowFontPicker]=useState(false);
   const[showCalendar,setShowCalendar]=useState(false);
   const[fontSize,setFontSize]=useState(14);
-  const[font,setFont]=useState(FONTS[0].value);
+  const[font,setFont]=useState("'CreamFont',serif");
   const[fbStatus,setFbStatus]=useState("idle");
   const toast=useToast();
   const unsubRef=useRef(null);
@@ -618,7 +649,7 @@ function App(){
   });
   const si={idle:{c:"#bbb",l:""},loading:{c:"#b8860b",l:"同步中…"},ok:{c:"#2d6a2d",l:"已連線 Firebase ☁"},error:{c:"#c0392b",l:"離線模式"}}[fbStatus];
 
-  const newStampDefault=()=>({id:"s_"+Date.now(),name:"新印章",cat:filter!=="all"?filter:(cats[0]?.id||"official"),desc:"",stampDate:today,material:"",svgKey:"circle",svgArgs:["新","印","#8B0000"],image:null});
+  const newStampDefault=()=>({id:"s_"+Date.now(),name:"新印章",cat:filter!=="all"?filter:(cats[0]?.id||"official"),desc:"",stampDate:today,stampType:"單色章",location:"",svgKey:"circle",svgArgs:["新","印","#8B0000"],images:[],coverIdx:0});
 
   return(
     <div style={{minHeight:"100vh",background:"#fdf6e3",fontFamily:font,color:"#1a0a00",backgroundImage:"repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(180,150,80,.07) 39px,rgba(180,150,80,.07) 40px),repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(180,150,80,.04) 39px,rgba(180,150,80,.04) 40px)"}}>
